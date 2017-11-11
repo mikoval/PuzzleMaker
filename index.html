@@ -7,9 +7,27 @@ body{margin:0px;}
 	border:1px solid #000000;
 }
 #edges{
+
 	display:inline-block;
 	width:300px;
-	
+
+}
+#new-edge{
+	text-align: center; 
+	display:block;  
+	margin: auto;
+}
+#edges-wrapper{
+	background-color:lightgray;
+	float:left;
+	padding:10px;
+	margin: 10px;
+}
+#puzzle-preview-wrapper{
+	background-color:lightgray;
+	float:left;
+	padding:10px;
+	margin: 10px;
 }
 </style>
 <script src = "p5.min.js"></script>
@@ -17,13 +35,24 @@ body{margin:0px;}
 <script src = "main.js"></script>
 
 <script src = "edges.js"></script>
+<script src = "puzzle-preview.js"></script>
 </head>
 <body>
 
-<div style="display: inline-block;">
+<div id = "edges-wrapper" style="display: inline-block;">
 
 	<h3 style="text-align: center">Create Edges</h3>
+	<button id = "new-edge" >New Edge </button><br>
+
 	<div style="" id = "edges" ></div>
+
+</div>
+
+<div  id = "puzzle-preview-wrapper" style="display: inline-block;">
+<h3 style="text-align: center">Puzzle Preview</h3>
+<div style="" id = "puzzle-preview" ></div>
+
+
 
 </div>
 </body>

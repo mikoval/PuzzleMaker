@@ -1,6 +1,9 @@
-edges = [];
-$( document ).ready(function() {
 
+$( document ).ready(function() {
+	edges = [];
+	$("#new-edge").on("click", function(){
+		createEdge();
+	})
 
 	createEdge();
     
@@ -82,14 +85,14 @@ function edge(ctx, elem, pieces){
 	this.elem = elem;
 	this.radius = 7.0;
 	this.vertices = []
-
+	this.selectedInd = undefined;
+	
     for(var i =0 ; i < pieces; i++){
 
     	var x = -1 + 2 / (pieces-1) * i;
     	var y = 0;
     	this.vertices.push({x:x, y:y});
     }
-    console.log(this.vertices)
     this.distance = function(a,b, c,d){
     	return Math.sqrt((a-c)*(a-c) + (b-d)*(b-d));
     }
