@@ -52,19 +52,22 @@ function puzzle(dimensions, edges, canvas){
 function piece(x,y, width, height, vertices, ctx){
 	this.position = {x:x, y:y};
 	this.ctx = ctx;
-	this.left = {};
-	this.top = {};
-	this.right = {};
+	this.left = [];
+	this.top = [];
+	this.right = [];
 	this.bottom = {};
 	this.width = width;
 	this.height = height;
 	this.initEdges = function(){
+		
 
 	}
 	this.draw = function(){
 		var x = this.position.x - 10;
 		var y = this.position.y - 10;
-		
+			
+
+
 		ctx.fillStyle = 'green';
 		ctx.fillRect(x,y,20,20);
 	}
