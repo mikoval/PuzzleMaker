@@ -12,7 +12,8 @@ var session      = require('express-session');
 var RedisStore = require('connect-redis')(session);
 var url = require('url');
 
-
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({limit: '50mb'}));
 
 var configDB = require('./config/database.js');
 
