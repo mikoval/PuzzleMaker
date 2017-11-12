@@ -2,9 +2,113 @@
 <html>
 </head>
 <style>
+
 body{margin:0px;}
+
+.button {
+	background-color: gray;
+	border: 1px;
+	margin: 10px;
+	color: white;
+	padding: 15px;
+	text-align: center;
+	left: 50%;
+
+	display: inline-block;
+	font-size: 16px;
+	cursor: pointer;
+	border-radius: 8px;
+}
+
+.payment-wrapper{
+	margin:auto;
+	margin-top: 100px;
+	width: 60%;
+	padding: 40px;
+	border-radius: 30px;
+	border: solid black 2px;
+	background-color: lightgray;
+	text-align: center;
+}
+td{
+	padding-top: 5px;
+}
+table{
+	text-align: left
+}
 </style>
+
+<script src = "/jquery-3.2.1.min.js"></script>
+
 </body>
+
+<div class="payment-wrapper">
+
+	<h2 style="text-align: center"> Register for Premium Account </h2>
+
+	<table style="margin:auto">
+		<tr>
+			<td>First name:</td>
+			<td><input type="text" id="firstname" name="firstname" value=""></td>
+		</tr>
+		<tr>
+			<td>Last name:</td>
+			<td><input type="text" id="lastname" name="lastname" value=""></td>
+		</tr>
+		<tr>
+			<td>Card Number:</td>
+			<td><input type="text" id="cardnum" value=""></td>
+		</tr>
+		<tr>
+			<td>CVV:</td>
+			<td><input type="text" id="cvv" value=""></td>
+		</tr>
+		<tr>
+			<td>Exp. Date:</td>
+			<td><input type="text" value="" id="expdatemm" placeholder="mm" style="width: 30px"> / <input type="text" id="expdateyyyy" value="" placeholder="yyyy" style="width: 30px"></td>
+		</tr>
+	</table>
+	
+	<input type="submit" id= "submit" class="button" value="Submit" placeholder = "yyyy">
+</div>
+
+<script>
+
+$("#submit").on("click", function(){
+
+	var firstname = $("#firstname").val();
+	var lastname = $("#lastname").val();
+	var cardnum = $("#cardnum").val();
+	var cvv = $("#cvv").val()
+	var expdate= $("#expdatemm").val() +"/"+ $("#expdateyyyy").val();
+	var data = {
+		firstname: firstname,
+		lastname: lastname,
+		cardnum: cardnum,
+		cvv: cvv,
+		expdate: expdate,
+
+	}
+      $.ajax({
+        type:"POST",
+        url:"/register", 
+        data:data ,
+        success: function(data){
+          console.log(data);
+      
+        },
+        error: function(){
+          console.log("failed")
+        }
+      })
+
+
+})
+ 
+   
+
+
+</script>
 
 </body>
 </html>

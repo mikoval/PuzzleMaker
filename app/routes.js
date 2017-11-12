@@ -75,6 +75,69 @@ module.exports = function(app, passport) {
 
         
     });
+
+      app.post('/register', isLoggedIn, function(req, res) {
+
+        var param = req.body;
+        console.log(param)
+
+        
+         
+        // Example of calling SecureNet Charge API from Node
+        var https = require('https');
+        var secureNetId = '8011193'; // Replace with your own ID
+        var secureKey = 'oo86PUKtNh4P'; // Replace with your own Key
+         
+        var charge = {
+          amount: 5.00,
+          card: {
+            number: param.cardnum,
+            cvv: param.cvv,
+            expirationDate: param.expdate,
+            
+          },
+          extendedInformation: {
+            typeOfGoods: 'PHYSICAL'
+          },
+          developerApplication: {
+            developerId: 12345678,
+            version: '1.2'
+          }
+        };
+
+        var json = JSON.stringify(charge);                      // Convert to JSON string  
+        var options = {                                         // HTTP call options
+          host: 'gwapi.demo.securenet.com',                     // Host address
+          port: 443,                                            // SSL port
+          path: '/api/Payments/Charge',                         // Path for charge API
+          method: 'POST',                                       // HTTP POST request
+          headers: {                                            // HTTP headers
+            'Content-Type': 'application/json',                 // Body is JSON
+            'Content-Length': Buffer.byteLength(json, 'utf8'),  // Necessary!
+            'Authorization': 'Basic ' + new Buffer(secureNetId + ':' + secureKey).toString('base64')
+          }
+        };
+
+        var req = https.request(options, function(res) {        // New request, with callback
+          var body = '';                                        // Place for response body
+          res.on('data', function(d) { body += d; });           // Collect response body data
+          res.on('end', function () {                           // Act when call is complete
+            var r = JSON.parse(body);                           // Convert string to object
+            console.log("http response code: ", res.statusCode);
+            console.log("success: " + r.success);
+            console.log("result: " + r.result);
+            console.log("message: " + r.message);
+            console.log("transactionId: " + r.transaction.transactionId);
+          });
+        });
+
+        req.on('error', function(e) { console.error(e); });     // Handle connection errors
+        req.write(json);                                        // Make the call
+        req.end();    
+            
+        
+    });
+
     app.get('/play/:id', function(req, res) {
 
 
