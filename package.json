@@ -1,0 +1,39 @@
+{
+  "name": "marioai",
+  "version": "1.0.0",
+  "description": "MarioLevelBuilder",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikoval/MarioAI.git"
+  },
+  "author": "Mike Koval, Tommy Ristau",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mikoval/MarioAI/issues"
+  },
+  "homepage": "https://github.com/mikoval/MarioAI#readme",
+  "dependencies": {
+    "bcrypt-nodejs": "latest",
+    "body-parser": "~1.0.0",
+    "connect-flash": "~0.1.1",
+    "connect-redis": "^3.3.0",
+    "cookie-parser": "~1.0.0",
+    "ejs": "~0.8.5",
+    "express": "~4.0.0",
+    "express-session": "~1.0.0",
+    "method-override": "~1.0.0",
+    "mongoose": "~4.4",
+    "morgan": "~1.0.0",
+    "passport": "~0.1.17",
+    "passport-facebook": "~1.0.2",
+    "passport-google-oauth": "~0.1.5",
+    "passport-local": "~0.1.6",
+    "passport-twitter": "~1.0.2",
+    "redis": "^2.7.1",
+    "url":"^0.11.0"
+  }
+}

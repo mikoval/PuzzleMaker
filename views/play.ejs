@@ -1,0 +1,304 @@
+
+
+
+
+<body>
+
+<style>
+body{
+    margin:0px;
+}
+.game-piece{
+    width: 300px;
+    height:300px;
+    background-color:blue;
+    position: absolute;
+    transform: translate(-33%, -33%);
+}
+body{
+    background-color: pink;
+}
+#grid{
+    background-color: white;
+    border:solid black 3px;
+    margin:40px;
+}
+#grid-wrapper{
+    background-color: white;
+    display: inline-block;
+}
+.cell{
+    background-color: white;
+
+    display:inline-block;
+
+}
+</style>
+<div id="grid-wrapper">
+    <div id= "grid">
+
+    </div>
+</div>
+</body>
+
+
+
+
+
+<script src = "/jquery-3.2.1.min.js"></script>
+
+<script>game = <%- JSON.stringify(game) %>;
+
+console.log(game);
+
+</script>
+<script>
+
+
+$("document").ready(function(){
+    
+
+})
+var WIDTH = 500;
+var HEIGHT = 500;
+
+
+
+selectedPiece = undefined;
+
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+function createGrid(x){
+    var arr = [];
+    for(var i = 0; i < x; i++){
+        arr.push(new Array(x));
+    }
+
+    return arr;
+}
+
+function getBase64Image(img) {
+    // Create an empty canvas element
+    var canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
+
+    // Copy the image contents to the canvas
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+
+    // Get the data-URL formatted image
+    // Firefox supports PNG and JPEG. You could check img.src to
+    // guess the original format, but be aware the using "image/jpg"
+    // will re-encode the image.
+    var dataURL = canvas.toDataURL("image/png");
+
+    return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+}
+
+
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
+
+
+
+str = decodeURIComponent(game.game);
+
+var gameData = JSON.parse(str);
+
+
+var pieces = gameData.pieces;
+
+
+
+
+var dim = Math.sqrt(pieces.length);
+var grid = createGrid(dim);
+
+
+var sizeX = WIDTH/dim;
+var sizeY = HEIGHT/dim;
+
+
+
+var img =  document.createElement("IMG");
+
+img.width = WIDTH;
+img.height = HEIGHT;
+
+img.src = gameData.image;
+
+//var url = getBase64Image(img);
+
+var pieceDivs = []
+
+for(var i =0 ; i < pieces.length; i++){
+    str = ""
+    var piece = pieces[i];
+
+    for(var j =0 ; j < piece.length; j++){
+
+        var x = piece[j].x;
+        var y = piece[j].y;
+
+        x  = (x + 3 )/6
+        y  = (y + 3 )/6
+
+        x*= 100;
+        y*= 100;
+
+        str += x + "% " + y + "%, "; 
+
+        
+    }
+    str = str.substring(0, str.length - 2)
+
+
+    var div = document.createElement("div");
+    $(div).addClass("game-piece")
+    $(div).css("width", sizeX*3);
+    $(div).css("height", sizeY*3);
+    $(div).css("clip-path", "polygon("+str+")")
+
+    div.style.background=  "url("+gameData.image+")"
+
+    $(div).css("background-size", WIDTH + "px " + HEIGHT + "px")
+
+    $(div).css("background-repeat", "no-repeat")
+
+    var xstart = (pieces.length - i -1) % dim;
+    var ystart = Math.floor((pieces.length - i -1) / dim);
+    
+    console.log(xstart + ',' + ystart);
+
+    xstart *= sizeX
+    ystart *= sizeY
+
+    xstart -= sizeX  * ( dim - 2);
+    ystart -= sizeY  *  (dim-2);
+
+    console.log(xstart + ',' + ystart);
+
+    $(div).css("background-position",  ystart+ "px " + xstart  + "px")
+
+    pieceDivs.push(div);
+    //$("body").append(div);
+
+
+}
+
+$("#grid").css("width", WIDTH);
+$("#grid").css("height", HEIGHT);
+
+
+
+
+
+
+
+pieceDivs = shuffle(pieceDivs);
+
+
+for(var i = 0 ; i < grid.length; i++){
+    for(var j = 0; j < grid[0].length; j++){
+        var x = i * sizeX + sizeX/2;
+        var y = j * sizeY + sizeY/2;
+        grid[i][j] = {x:x, y:y}
+
+
+
+
+        var cell = document.createElement("div");
+
+        grid[i][j].cell = cell;
+        grid[i][j].piece = pieceDivs[j * grid.length + i];
+
+
+        $(cell).attr("x", i);
+        $(cell).attr("y", j);
+
+
+
+        $(cell).addClass("cell");
+        $(cell).css("width", sizeX-2);
+        $(cell).css("height", sizeY-2);
+
+
+
+        $(cell).append(grid[i][j].piece);
+
+        $("#grid").append(cell);
+
+
+        
+
+
+
+    }
+}
+
+$(".cell").on("click", function(){
+    var x = parseInt($(this).attr("x"));
+    var y = parseInt($(this).attr("y"));
+
+    //var piece = grid[x][y].piece;
+
+    if(selectedPiece == undefined){
+        console.log('selected piece')
+        selectedPiece = {x:x, y:y};
+    }
+    else{
+        console.log("swapped piece")
+        var firstPiece = grid[selectedPiece.x][selectedPiece.y].piece;
+        var secondPiece = grid[x][y].piece;
+
+        $(grid[x][y].cell).html("");
+        $(grid[selectedPiece.x][selectedPiece.y].cell).html("");
+
+        $(grid[x][y].cell).append(firstPiece);
+        $(grid[selectedPiece.x][selectedPiece.y].cell).append(secondPiece);
+
+         grid[selectedPiece.x][selectedPiece.y].piece = secondPiece;
+         grid[x][y].piece = firstPiece;
+        selectedPiece = undefined;
+    }
+    
+
+    
+})
+
+
+
+
+
+
+
+
+
+</script>
+
+

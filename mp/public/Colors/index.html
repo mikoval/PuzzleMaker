@@ -1,0 +1,150 @@
+<!DOCTYPE HTML>
+<html>
+</head>
+<style>
+body{margin:0px;}
+.edge{
+	border:1px solid #000000;
+}
+#edges{
+
+	display:inline-block;
+	width:300px;
+
+}
+#new-edge{
+	text-align: center; 
+	display:block;  
+	margin: auto;
+}
+#edges-wrapper{
+	background-color:lightgray;
+	float:left;
+	padding:10px;
+	margin: 10px;
+}
+#puzzle-preview-wrapper{
+	background-color:lightgray;
+	float:left;
+	padding:10px;
+	margin: 10px;
+}
+.count-lbl{
+	margin:0px;
+	display: inline-block;
+}
+.param-label{
+	display:inline-block;
+	margin:0px;
+}
+</style>
+<script src = "p5.min.js"></script>
+<script src = "jquery-3.2.1.min.js"></script>
+<script src = "main.js"></script>
+
+<script src = "edges.js"></script>
+<script src = "puzzle-preview.js"></script>
+</head>
+<body>
+
+<div id = "edges-wrapper" style="display: inline-block;">
+	<button id = "generate" style = "text-align: center; margin: auto; display: block" >Generate</button><br>
+	<h3 style="text-align: center;">Parameters</h3>
+	<p class="param-label">Edge Vertices: </p> <p id="edge-vert-count" class='count-lbl'>5</p><br>
+	<input id="edge-vert-slider" type="range" min="3" max="10" value="5"><br>
+
+
+	<p class="param-label">Puzzle Dimension: </p> <p id="puzzle-dim-count"  class='count-lbl'></p>3<br>
+	<input id="puzzle-dim-slider" type="range" min="2" max="10" value="3"><br>
+
+
+	<p class="param-label">Image Link: </p> <br>
+	<input id="puzzle-image-box" type="text"><br>
+	<image  id = "img" str=""  style= "display:none" />
+
+
+	<h3 style="text-align: center">Create Edges</h3>
+	<button id = "new-edge" >New Edge </button><br>
+
+	<div style="" id = "edges" ></div>
+
+</div>
+
+<div  id = "puzzle-preview-wrapper" style="display: inline-block;">
+<h3 style="text-align: center">Puzzle Preview</h3>
+<div style="" id = "puzzle-preview" ></div>
+
+
+
+</div>
+<script> // # means id selector
+$("#edge-vert-slider").on("change", function(){
+	var val = $(this).val();
+	
+	edges = [];
+	edgeVertSize = parseInt(val);
+	var edgesDiv = $("#edges");
+	edgesDiv.html("");
+	createEdge();
+	puzz = new puzzle(DIMENSIONS, null, canvas);
+	puzz.draw();
+
+})
+
+$("#puzzle-dim-slider").on("change", function(){
+	var val = $(this).val();
+	DIMENSIONS = parseInt(val);
+	puzz = new puzzle(DIMENSIONS, null, canvas);
+	puzz.draw();
+
+	puzz.setEdges(edges);
+
+})
+
+$("#puzzle-image-box").on("change", function(){
+	var val = $(this).val();
+	$("#img")[0].src= val;
+	console.log("redrawing")
+	puzz.draw();
+
+})
+
+$("#generate").on("click", function(){
+
+
+	var obj = {
+		pieces: puzz.getPieces(),
+		image: $("#img")[0].src,
+	}
+	var objStr = JSON.stringify(obj);
+
+	objStr = encodeURIComponent(objStr);
+
+
+
+	var obj = {data:objStr};
+	 
+	 
+  	var data = obj;
+	  $.ajax({
+	    type:"POST",
+	    url:"/home", 
+	    data:data ,
+	    success: function(data){
+	      console.log(data)
+	  
+	    },
+	    error: function(){
+	      console.log("failed")
+	    }
+	  })
+
+
+
+})
+
+
+
+</script>
+</body>
+</html>

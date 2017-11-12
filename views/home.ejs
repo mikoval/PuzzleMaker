@@ -1,0 +1,83 @@
+<!-- views/profile.ejs -->
+<!doctype html>
+<html>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <script   src="https://code.jquery.com/jquery-3.2.1.min.js"   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="   crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+      .logout-btn{cursor:pointer;position:absolute; right:0px;top:0px; width:100px;height:100%; line-height:56px;background-color:lightgray; text-align:center; color:black}
+      .logout-btn:hover{background-color:lightyellow}
+      .level-box{width:200px; height:200px; background-color:lightyellow; border:solid; border-radius: 10px; padding:10px; margin:20px; text-align: center; display: inline-block;}
+    </style>
+
+<div class="navbar navbar-default navbar-fixed-top">
+    <div class="navbar-collapse collapse">
+      <div style = "text-align:center"><h3>Puzzle Maker</h3></div>
+    </div>
+    <a>
+    <div class="logout-btn">
+      Logout
+    </div>
+    </a>
+</div>
+
+
+<body>
+
+<div class="container" style="padding-top:100px">
+<div><button type = "button" class = "new-level-btn" data-toggle="modal" data-target="#new-level-modal"><a href='/create'>Add New Level</a></button></div>
+
+<div id = "level-container">
+</div>
+
+</div>
+
+
+</body>
+</html>
+<script>
+function createLevelWidgets(arr){
+
+  var str = "";
+  for(var i = 0; i < arr.length; i++){
+    
+    str += "<div class=\"level-box\">"
+    
+    +"<h3>" + "Game" + "</h3>"
+    +"<span id='"+arr[i]._id+"' class='delete-level glyphicon glyphicon-trash'></span><br>"
+    +"<a href='/play/"+ arr[i]._id +"'>play</a>"
+    +"</div>";
+  }
+  $("#level-container").html(str);
+  bindDeleteLevel();
+}
+function bindDeleteLevel(){
+  $(".delete-level").on('click', function(){
+    var level = $(this).attr('id');
+    var data = {id:level};
+    $.ajax({
+      type:"DELETE",
+      url:"/home", 
+      data:data ,
+      success: function(data){
+        createLevelWidgets(data);
+      },
+      error: function(){
+        console.log("failed")
+      }
+    })
+  })
+}
+
+
+$(".logout-btn").on("click", function(){
+  window.location = "/logout";
+})
+
+
+var levels = <%- JSON.stringify(levels) %>;
+createLevelWidgets(levels);
+</script>
