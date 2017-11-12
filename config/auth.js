@@ -8,19 +8,19 @@ var config ={
         'facebookAuth' : {
             'clientID'      : '505003096505926', // your App ID
             'clientSecret'  : 'ac902660ef19e39875a25c264e94494a', // your App Secret
-            'callbackURL'   : 'https://puzzlemaster.org/auth/facebook/callback'
+            'callbackURL'   : 'http://www.puzzlemaster.org/auth/facebook/callback'
         },
 
         'twitterAuth' : {
             'consumerKey'       : 'ioocTHWwGBOcQypgltHK61cel',
             'consumerSecret'    : 'yBVQjM2w4o7g4pilFoF1JOONdv2RaA4u7gTjYeRg1SoN4wOwxD',
-            'callbackURL'       : 'https://puzzlemaster.org/auth/twitter/callback'
+            'callbackURL'       : 'http://www.puzzlemaster.org/auth/twitter/callback'
         },
 
         'googleAuth' : {
             'clientID'      : '597384415679-o0i0ko1qepdm92n5mqnia8ecavuft3mt.apps.googleusercontent.com',
             'clientSecret'  : '4i-SSRBDiTup874bLhuSdLCD',
-            'callbackURL'   : 'https://puzzlemaster.org/auth/google/callback'
+            'callbackURL'   : 'http://www.puzzlemaster.org/auth/google/callback'
         }
     },
     default:{
