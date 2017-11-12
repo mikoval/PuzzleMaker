@@ -7,6 +7,8 @@ var gameSchema = mongoose.Schema({
     id: String,
     created_by: String,
     game: String,
+    name:String,
+    image:String
 
 
 });

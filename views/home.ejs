@@ -15,7 +15,7 @@
 
 <div class="navbar navbar-default navbar-fixed-top">
     <div class="navbar-collapse collapse">
-      <div style = "text-align:center"><h3>Puzzle Maker</h3></div>
+      <div style = "text-align:center"><h3>Puzzle Master</h3></div>
     </div>
     <a>
     <div class="logout-btn">
@@ -28,7 +28,10 @@
 <body>
 
 <div class="container" style="padding-top:100px">
-<div><button type = "button" class = "new-level-btn" data-toggle="modal" data-target="#new-level-modal"><a href='/create'>Add New Level</a></button></div>
+<div>
+<button type = "button" class = "new-level-btn" data-toggle="modal" data-target="#new-level-modal"><a href='/create'>Add New Level</a></button>
+<button type = "button" class = "register-btn" data-toggle="modal" data-target="#register"><a href='/register'>Register</a></button>
+</div>
 
 <div id = "level-container">
 </div>
@@ -43,10 +46,11 @@ function createLevelWidgets(arr){
 
   var str = "";
   for(var i = 0; i < arr.length; i++){
-    
+    console.log(arr[i])
     str += "<div class=\"level-box\">"
     
-    +"<h3>" + "Game" + "</h3>"
+    +"<h3>" + arr[i].name + "</h3>"
+    +"<div style='background-image: url(\" " +arr[i].image+ "\"); width:80px; height:80px; border-radius:50%; margin:auto;  background-size: cover;' ></div>" 
     +"<span id='"+arr[i]._id+"' class='delete-level glyphicon glyphicon-trash'></span><br>"
     +"<a href='/play/"+ arr[i]._id +"'>play</a>"
     +"</div>";

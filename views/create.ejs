@@ -48,8 +48,14 @@ body{margin:0px;}
 <body>
 
 <div id = "edges-wrapper" style="display: inline-block;">
+
     <button id = "generate" style = "text-align: center; margin: auto; display: block" >Generate</button><br>
     <h3 style="text-align: center;">Parameters</h3>
+
+    <p class="param-label">Puzzle Name: </p> <br>
+    <input id="puzzle-name-box" type="text"><br>
+
+
     <p class="param-label">Edge Vertices: </p> <p id="edge-vert-count" class='count-lbl'>5</p><br>
     <input id="edge-vert-slider" type="range" min="3" max="10" value="5"><br>
 
@@ -115,12 +121,13 @@ $("#generate").on("click", function(){
     var obj = {
         pieces: puzz.getPieces(),
         image: $("#img")[0].src,
+
     }
     var objStr = JSON.stringify(obj);
 
     objStr = encodeURIComponent(objStr);
     
-    var obj = {data:objStr};
+    var obj = {data:objStr, image:  $("#img")[0].src, name: $("#puzzle-name-box").val()};
      
      
     var data = obj;

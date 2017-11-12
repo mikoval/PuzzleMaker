@@ -49,7 +49,6 @@ body{
 
 <script>game = <%- JSON.stringify(game) %>;
 
-console.log(game);
 
 </script>
 <script>
@@ -193,7 +192,6 @@ for(var i =0 ; i < pieces.length; i++){
     var xstart = (pieces.length - i -1) % dim;
     var ystart = Math.floor((pieces.length - i -1) / dim);
     
-    console.log(xstart + ',' + ystart);
 
     xstart *= sizeX
     ystart *= sizeY
@@ -201,7 +199,6 @@ for(var i =0 ; i < pieces.length; i++){
     xstart -= sizeX  * ( dim - 2);
     ystart -= sizeY  *  (dim-2);
 
-    console.log(xstart + ',' + ystart);
 
     $(div).css("background-position",  ystart+ "px " + xstart  + "px")
 
@@ -269,7 +266,23 @@ $(".cell").on("click", function(){
 
     if(selectedPiece == undefined){
         console.log('selected piece')
+
+
+        //$(this).append();
         selectedPiece = {x:x, y:y};
+
+        var piece =  grid[selectedPiece.x][selectedPiece.y].piece;
+
+        var clone = piece.cloneNode(true);
+
+        $(clone).css("background", "");
+        $(clone).css("background-color", "lightgreen");
+        $(clone).css("z-index", "10");
+        $(clone).css("opacity", "0.5");
+
+        $(this).append(clone)
+
+
     }
     else{
         console.log("swapped piece")

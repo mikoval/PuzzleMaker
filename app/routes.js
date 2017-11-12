@@ -38,10 +38,14 @@ module.exports = function(app, passport) {
         
 
         game.game = param.data;
+        game.name = param.name;
+        game.image = param.image;
         game.created_by = req.user.id
 
+        console.log(param.data);
         
         game.save(function(){
+
             res.json(game._id);
         });
         
@@ -61,7 +65,16 @@ module.exports = function(app, passport) {
         
      
     });
+     app.get('/register', isLoggedIn, function(req, res) {
 
+        console.log(req.user.id)
+
+        res.render('register.ejs', {
+            user : req.user
+        })
+
+        
+    });
     app.get('/play/:id', function(req, res) {
 
 
