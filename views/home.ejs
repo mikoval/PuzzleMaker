@@ -30,7 +30,9 @@
 <div class="container" style="padding-top:100px">
 <div>
 <button type = "button" class = "new-level-btn" data-toggle="modal" data-target="#new-level-modal"><a href='/create'>Add New Level</a></button>
+<% if(!user.registered){ %>
 <button type = "button" class = "register-btn" data-toggle="modal" data-target="#register"><a href='/register'>Register</a></button>
+<% } %>
 </div>
 
 <div id = "level-container">

@@ -49,23 +49,23 @@ table{
 	<table style="margin:auto">
 		<tr>
 			<td>First name:</td>
-			<td><input type="text" id="firstname" name="firstname" value=""></td>
+			<td><input type="text" id="firstname" name="firstname" value="Mike"></td>
 		</tr>
 		<tr>
 			<td>Last name:</td>
-			<td><input type="text" id="lastname" name="lastname" value=""></td>
+			<td><input type="text" id="lastname" name="lastname" value="Friends"></td>
 		</tr>
 		<tr>
 			<td>Card Number:</td>
-			<td><input type="text" id="cardnum" value=""></td>
+			<td><input type="text" id="cardnum" value="4111111111111111"></td>
 		</tr>
 		<tr>
 			<td>CVV:</td>
-			<td><input type="text" id="cvv" value=""></td>
+			<td><input type="text" id="cvv" value="123"></td>
 		</tr>
 		<tr>
 			<td>Exp. Date:</td>
-			<td><input type="text" value="" id="expdatemm" placeholder="mm" style="width: 30px"> / <input type="text" id="expdateyyyy" value="" placeholder="yyyy" style="width: 30px"></td>
+			<td><input type="text" value="1" id="expdatemm" placeholder="mm" style="width: 30px"> / <input type="text" id="expdateyyyy" value="2020" placeholder="yyyy" style="width: 30px"></td>
 		</tr>
 	</table>
 	
@@ -94,7 +94,13 @@ $("#submit").on("click", function(){
         url:"/register", 
         data:data ,
         success: function(data){
-          console.log(data);
+        	console.log(data);
+          if(data.result == "BAD_REQUEST"){
+          	alert(data.message)
+          }
+          if(data.result == "APPROVED"){
+          	window.location = "/"
+          }
       
         },
         error: function(){

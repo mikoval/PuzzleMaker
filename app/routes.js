@@ -76,9 +76,9 @@ module.exports = function(app, passport) {
         
     });
 
-      app.post('/register', isLoggedIn, function(req, res) {
+      app.post('/register', isLoggedIn, function(reqo, reso) {
 
-        var param = req.body;
+        var param = reqo.body;
         console.log(param)
 
         
@@ -128,7 +128,24 @@ module.exports = function(app, passport) {
             console.log("result: " + r.result);
             console.log("message: " + r.message);
             console.log("transactionId: " + r.transaction.transactionId);
+
+            var user  = reqo.user; // pull the user out of the session
+
+            user.registered = true;
+
+                user.save(function(err) {
+
+                    if (err)
+                        throw err;
+                    console.log("saved")
+                    console.log(user);
+                    reso.json(r);
+                
+                });
+            
           });
+         
+
         });
 
         req.on('error', function(e) { console.error(e); });     // Handle connection errors
