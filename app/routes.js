@@ -76,7 +76,7 @@ module.exports = function(app, passport) {
         
     });
    
-    app.get('/create', null, function(req, res) {
+    app.get('/create', isLoggedIn, function(req, res) {
 
 
         
