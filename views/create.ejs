@@ -56,12 +56,26 @@ body{margin:0px;}
     <input id="puzzle-name-box" type="text"><br>
 
 
+    <% if(user.registered){ %>
+    	 <p class="param-label">Edge Type: </p>
+    	  <select id = "edge-mode-dd">
+		  <option value="lines">Lines</option>
+		  <option value="curves">Curves</option>
+	
+		</select>
+		<br>
+
+   	<% } %>
+
+
+
+    <div id = "edge-verts-wrapper">
     <p class="param-label">Edge Vertices: </p> <p id="edge-vert-count" class='count-lbl'>5</p><br>
     <input id="edge-vert-slider" type="range" min="3" max="10" value="5"><br>
+    </div>
 
-
-    <p class="param-label">Puzzle Dimension: </p> <p id="puzzle-dim-count"  class='count-lbl'></p>3<br>
-    <input id="puzzle-dim-slider" type="range" min="2" max="10" value="3"><br>
+    <p class="param-label">Puzzle Dimension: </p> <p id="puzzle-dim-count"  class='count-lbl'>3</p><br>
+    <input id="puzzle-dim-slider" type="range" min="2" <% if(user.registered){ %> max="10" <% } %> <% if(!user.registered){ %> max="6" <% } %> value="3"><br>
 
 
     <p class="param-label">Image Link: </p> <br>
@@ -70,6 +84,8 @@ body{margin:0px;}
 
 
     <h3 style="text-align: center">Create Edges</h3>
+    
+
     <button id = "new-edge" >New Edge </button><br>
 
     <div style="" id = "edges" ></div>
@@ -89,17 +105,57 @@ $("#edge-vert-slider").on("change", function(){
     
     edges = [];
     edgeVertSize = parseInt(val);
+    $("#edge-vert-count").text(edgeVertSize);
+
+
     var edgesDiv = $("#edges");
     edgesDiv.html("");
     createEdge();
+
+
     puzz = new puzzle(DIMENSIONS, null, canvas);
     puzz.draw();
 
 })
 
+$("#edge-mode-dd").on("change", function(){
+    edges = [];
+  
+    
+    var val = $(this).val();
+
+    edgemode = val;
+
+    console.log(edgemode);
+
+    if(edgemode == "curves"){
+    	$("#edge-verts-wrapper").hide();
+    }
+    if(edgemode == "lines"){
+    	$("#edge-verts-wrapper").show();
+    }
+
+    var edgesDiv = $("#edges");
+    edgesDiv.html("");
+    createEdge();
+
+
+    if(edgemode == "lines"){
+    	puzz = new puzzle(DIMENSIONS, null, canvas);
+    }
+    if(edgemode == "curves"){
+    	puzz = new puzzle(DIMENSIONS, null, canvas);
+    } 
+    puzz.draw();
+
+})
+
+
+
 $("#puzzle-dim-slider").on("change", function(){
     var val = $(this).val();
     DIMENSIONS = parseInt(val);
+    $("#puzzle-dim-count").text(val);
     puzz = new puzzle(DIMENSIONS, null, canvas);
     puzz.draw();
 
@@ -114,6 +170,8 @@ $("#puzzle-image-box").on("change", function(){
     puzz.draw();
 
 })
+
+
 
 $("#generate").on("click", function(){
 
