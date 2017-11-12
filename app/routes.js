@@ -67,7 +67,6 @@ module.exports = function(app, passport) {
 
         Game.findOne({_id: req.params.id}, function(err, game){
                 res.render('play.ejs', {
-                user : req.user,
                 game : game
 
             })
@@ -77,7 +76,7 @@ module.exports = function(app, passport) {
         
     });
    
-    app.get('/create', isLoggedIn, function(req, res) {
+    app.get('/create', null, function(req, res) {
 
 
         
