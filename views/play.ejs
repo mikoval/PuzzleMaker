@@ -182,6 +182,7 @@ for(var i =0 ; i < pieces.length; i++){
     $(div).css("width", sizeX*3);
     $(div).css("height", sizeY*3);
     $(div).css("clip-path", "polygon("+str+")")
+    $(div).css("-webkit-clip-path", "polygon("+str+")")
 
     div.style.background=  "url("+gameData.image+")"
 
