@@ -29,6 +29,14 @@ body{margin:0px;}
 	padding:10px;
 	margin: 10px;
 }
+.count-lbl{
+	margin:0px;
+	display: inline-block;
+}
+.param-label{
+	display:inline-block;
+	margin:0px;
+}
 </style>
 <script src = "p5.min.js"></script>
 <script src = "jquery-3.2.1.min.js"></script>
@@ -40,6 +48,19 @@ body{margin:0px;}
 <body>
 
 <div id = "edges-wrapper" style="display: inline-block;">
+	<h3 style="text-align: center">Parameters</h3>
+	<p class="param-label">Edge Vertices: </p> <p id="edge-vert-count" class='count-lbl'>5</p><br>
+	<input id="edge-vert-slider" type="range" min="3" max="10" value="5"><br>
+
+
+	<p class="param-label">Puzzle Dimension: </p> <p id="puzzle-dim-count"  class='count-lbl'></p>3<br>
+	<input id="puzzle-dim-slider" type="range" min="2" max="10" value="3"><br>
+
+
+	<p class="param-label">Image Link: </p> <br>
+	<input id="puzzle-image-box" type="text"><br>
+	<image  id = "img" str=""  style= "display:none" />
+
 
 	<h3 style="text-align: center">Create Edges</h3>
 	<button id = "new-edge" >New Edge </button><br>
@@ -55,5 +76,40 @@ body{margin:0px;}
 
 
 </div>
+<script> // # means id selector
+$("#edge-vert-slider").on("change", function(){
+	var val = $(this).val();
+	
+	edges = [];
+	edgeVertSize = parseInt(val);
+	var edgesDiv = $("#edges");
+	edgesDiv.html("");
+	createEdge();
+	puzz = new puzzle(DIMENSIONS, null, canvas);
+	puzz.draw();
+
+})
+
+$("#puzzle-dim-slider").on("change", function(){
+	var val = $(this).val();
+	DIMENSIONS = parseInt(val);
+	puzz = new puzzle(DIMENSIONS, null, canvas);
+	puzz.draw();
+
+	puzz.setEdges(edges);
+
+})
+
+$("#puzzle-image-box").on("change", function(){
+	var val = $(this).val();
+	$("#img")[0].src= val;
+	console.log("redrawing")
+	puzz.draw();
+
+})
+
+
+
+</script>
 </body>
 </html>

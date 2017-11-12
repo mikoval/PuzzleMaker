@@ -1,4 +1,6 @@
 
+
+edgeVertSize = 5;
 $( document ).ready(function() {
 	edges = [];
 	$("#new-edge").on("click", function(){
@@ -29,9 +31,10 @@ function createEdge(){
 	edgesDiv.appendChild(canvas);
 
     var ctx = canvas.getContext('2d');	
-    var obj = new edge(ctx, canvas, 5);
+    var obj = new edge(ctx, canvas, edgeVertSize);
 
     edges.push(obj);
+
 
 
 
@@ -57,6 +60,8 @@ function createEdge(){
 		x =  event.clientX - rect.left
 		y = event.clientY - rect.top
 	   	edge.handleMouseUp(x,y);
+
+	   	puzz.setEdges(edges);
 		
     })
     $(canvas).on("mousemove", function(event){
