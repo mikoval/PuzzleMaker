@@ -33,7 +33,13 @@ function puzzle(dimensions, edges, canvas){
 		for(var j = 0; j < this.pieces[0].length; j++){
 			var x=  i * pieceWidth + pieceWidth /2
 			var y = j * pieceHeight + pieceHeight /2
-			var p = new piece(x, y ,pieceWidth, pieceHeight, edgeVertSize,   this.ctx);
+
+			if(edgemode == "lines"){
+				var p = new piece(x, y ,pieceWidth, pieceHeight, edgeVertSize,   this.ctx);
+			}
+			if(edgemode == "curves"){
+				var p = new piece(x, y ,pieceWidth, pieceHeight, curveRes,   this.ctx);
+			}
 			this.pieces[i][j]= p;
 		}
 	}
@@ -129,6 +135,7 @@ function piece(x,y, width, height, vertices, ctx){
 	this.height = height;
 	this.vertices = vertices;
 
+	console.log(vertices)
 	this.setLeftEdge = function(edgeVerts){
 
 		for (var i = 0; i < this.left.length; i++){
@@ -151,8 +158,7 @@ function piece(x,y, width, height, vertices, ctx){
 
 			var x = this.left[i].x / (this.width/2); 
 			var y = this.left[i].y / (this.height/2); 
-			x = x.toFixed(2);
-			y = y.toFixed(2); 
+			
 			x = parseFloat(x)
 			y = parseFloat(y)
 			verts.push( {x: x, y:y });
@@ -161,8 +167,7 @@ function piece(x,y, width, height, vertices, ctx){
 		for (var i = 0; i < this.bottom.length; i++){
 			var x = this.bottom[i].x / (this.width/2); 
 			var y = this.bottom[i].y / (this.height/2); 
-			x = x.toFixed(2);
-			y = y.toFixed(2); 
+		
 			x = parseFloat(x)
 			y = parseFloat(y)
 			verts.push( {x: x, y:y });
@@ -170,8 +175,7 @@ function piece(x,y, width, height, vertices, ctx){
 		for (var i = 0; i < this.right.length; i++){
 			var x = this.right[i].x / (this.width/2); 
 			var y = this.right[i].y / (this.height/2); 
-			x = x.toFixed(2);
-			y = y.toFixed(2); 
+		
 			x = parseFloat(x)
 			y = parseFloat(y)
 			verts.push( {x: x, y:y });
@@ -179,9 +183,7 @@ function piece(x,y, width, height, vertices, ctx){
 		for (var i = 0; i < this.top.length; i++){
 			var x = this.top[i].x / (this.width/2); 
 			var y = this.top[i].y / (this.height/2); 
-			x = x.toFixed(2);
-			y = y.toFixed(2); 
-
+			
 			x = parseFloat(x)
 			y = parseFloat(y)
 			verts.push( {x: x, y:y });
