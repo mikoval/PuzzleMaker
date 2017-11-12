@@ -62,7 +62,7 @@ module.exports = function(app, passport) {
      
     });
 
-    app.get('/play/:id', isLoggedIn, function(req, res) {
+    app.get('/play/:id', function(req, res) {
 
 
         Game.findOne({_id: req.params.id}, function(err, game){
