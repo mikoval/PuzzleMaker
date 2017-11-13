@@ -56,7 +56,7 @@ body{margin:0px;}
     <input id="puzzle-name-box" type="text"><br>
 
 
-    <% if(user.registered){ %>
+  
     	 <p class="param-label">Edge Type: </p>
     	  <select id = "edge-mode-dd">
 		  <option value="lines">Lines</option>
@@ -65,7 +65,7 @@ body{margin:0px;}
 		</select>
 		<br>
 
-   	<% } %>
+
 
 
 
@@ -75,7 +75,7 @@ body{margin:0px;}
     </div>
 
     <p class="param-label">Puzzle Dimension: </p> <p id="puzzle-dim-count"  class='count-lbl'>3</p><br>
-    <input id="puzzle-dim-slider" type="range" min="2" <% if(user.registered){ %> max="10" <% } %> <% if(!user.registered){ %> max="6" <% } %> value="3"><br>
+    <input id="puzzle-dim-slider" type="range" min="2" max="10" value="3"><br>
 
 
     <p class="param-label">Image Link: </p> <br>
