@@ -1,4 +1,5 @@
 <!-- views/profile.ejs -->
+
 <!doctype html>
 <html>
 <head>
@@ -101,3 +102,14 @@ $(".premium-btn").on("click", function(){
 var levels = <%- JSON.stringify(levels) %>;
 createLevelWidgets(levels);
 </script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-100165936-3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-100165936-3');
+</script>
+
