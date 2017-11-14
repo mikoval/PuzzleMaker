@@ -291,10 +291,13 @@ function piece(x,y, width, height, vertices, ctx){
 	this.initEdges();
 
 }
-function createGrid(x){
+function createGrid(x, y){
+	if(y == undefined){
+		y = x;
+	}
 	var arr = [];
 	for(var i = 0; i < x; i++){
-		arr.push(new Array(x));
+		arr.push(new Array(y));
 	}
 
 	return arr;
